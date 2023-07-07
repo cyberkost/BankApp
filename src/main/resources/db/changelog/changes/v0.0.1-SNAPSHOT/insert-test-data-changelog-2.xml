@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="insert test data into manager table" author="admin">
+        <insert tableName="manager">
+            <column name="id" valueComputed="UUID()"/>
+            <column name="first_name" value="Irina"/>
+            <column name="last_name" value="Friedhof"/>
+            <column name="status" value="DISABLED"/>
+<!--            <column name="created_at" value="2022-02-24"/>-->
+            <column name="updated_at" value="2022-02-23"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert test data into client table" author="admin">
+        <insert tableName="client">
+            <column name="id" valueComputed="UUID()"/>
+            <column name="status" value="ERROR"/>
+            <column name="tax_code" value="35"/>
+            <column name="first_name" value="Viktor"/>
+            <column name="last_name" value="Wolf"/>
+            <column name="email" value="wolf@gmail.com"/>
+            <column name="address" value="Wolf Straße 10, Germany"/>
+            <column name="phone" value="+545215564"/>
+<!--            <column name="created_at" value="2022-02-23"/>-->
+            <column name="updated_at" value="2022-02-23"/>
+<!--            <column name="manager_id" valueComputed="UUID()"/>-->
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert test data into account table" author="admin">
+        <insert tableName="account">
+            <column name="id" valueComputed="UUID()"/>
+            <column name="name" value="Gold"/>
+            <column name="type" value="MORTIRE"/>
+            <column name="status" value="AVAILABLE"/>
+            <column name="balance" value="20000"/>
+            <column name="currency_code" value="EURO"/>
+<!--            <column name="created_at" value="2022-02-24"/>-->
+            <column name="updated_at" value="2022-02-24"/>
+<!--            <column name="client_id" valueComputed="UUID()"/>-->
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert test data into transaction table" author="admin">
+        <insert tableName="transaction">
+            <column name="id" valueComputed="UUID()"/>
+            <column name="type" value="564"/>
+            <column name="amount" value="500.5"/>
+            <column name="description" value="Text"/>
+<!--            <column name="created_at" value="2022-02-25"/>-->
+<!--            <column name="debit_account_id" valueComputed="UUID()"/>-->
+<!--            <column name="credit_account_id" valueComputed="UUID()"/>-->
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert test data into product table" author="admin">
+        <insert tableName="product">
+            <column name="id" valueComputed="UUID()"/>
+            <column name="name" value="Product XXX"/>
+            <column name="status" value="TO GO"/>
+            <column name="currency_code" value="NASDAQ"/>
+            <column name="interest_rate" value="1.6"/>
+            <column name="product_limit" value="20"/>
+<!--            <column name="created_at" value="2022-02-26"/>-->
+            <column name="updated_at" value="2022-02-27"/>
+<!--            <column name="manager_id" valueComputed="UUID()"/>-->
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert test data into agreement table" author="admin">
+        <insert tableName="agreement">
+            <column name="id" valueComputed="UUID()"/>
+            <column name="interest_rate" value="2.0"/>
+            <column name="status" value="ACCEPTED"/>
+            <column name="sum" value="1500"/>
+<!--            <column name="created_at" value="2022-02-26"/>-->
+            <column name="updated_at" value="2022-02-25"/>
+<!--            <column name="product_id" valueComputed="UUID()"/>-->
+<!--            <column name="account_id" valueComputed="UUID()"/>-->
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
