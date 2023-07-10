@@ -1,41 +1,45 @@
 package com.project.bankapp.entity;
 
+import com.project.bankapp.entity.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "transaction")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "transactions")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "uuid")
+    private UUID uuid;
+
+    //    @ManyToOne
+    @JoinColumn(name = "debit_account_uuid")
+    private UUID debitAccountUuid; //Sender
+
+    //    @ManyToOne
+    @JoinColumn(name = "credit_account_uuid")
+    private UUID creditAccountUuid; //Recipient
 
     @Column(name = "type")
-    private byte type;
+    private TransactionType type;
 
-    @Column(name = "amount")
-    private Double amount;
+    @Column(name = "amount", precision = 12, scale = 2)
+    private BigDecimal amount;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    // Foreign Key
-//    @JoinColumn(name = "debit_account_id")
-//    private UUID debitAccountId;
-
-    // Foreign Key
-//    @JoinColumn(name = "credit_account_id")
-//    private UUID creditAccountId;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Timestamp createdAt;
 }
