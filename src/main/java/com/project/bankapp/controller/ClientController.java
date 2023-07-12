@@ -1,58 +1,42 @@
 package com.project.bankapp.controller;
 
 import com.project.bankapp.entity.Client;
-import com.project.bankapp.service.ClientService;
+import com.project.bankapp.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
+@Controller
+@RequestMapping("/bank")
 public class ClientController {
-    private final ClientService clientService;
-
     @Autowired
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
+    ClientRepository clientRepository;
+
+    @PostMapping(path = "/add")
+    public @ResponseBody String addClient(
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String age,
+            @RequestParam String citizenship,
+            @RequestParam String email,
+            @RequestParam String address,
+            @RequestParam String phone,
+            @RequestParam String taxCode) {
+        Client client = new Client();
+        client.setFirstName(firstName);
+        client.setLastName(lastName);
+        client.setAge(age);
+        client.setCitizenship(citizenship);
+        client.setEmail(email);
+        client.setAddress(address);
+        client.setPhone(phone);
+        client.setTaxCode(taxCode);
+        clientRepository.save(client);
+        return "saved";
     }
 
-    @PostMapping("/clients")
-    public ResponseEntity<?> create(@RequestBody Client client) {
-        clientService.create(client);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @GetMapping(value = "/clients")
-    public ResponseEntity<List<Client>> readAll() {
-        final List<Client> clients = clientService.readAll();
-        return clients != null && !clients.isEmpty()
-                ? new ResponseEntity<>(clients, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @GetMapping(value = "/clients/{id}")
-    public ResponseEntity<Client> read(@PathVariable(name = "uuid") int uuid) {
-        final Client client = clientService.read(uuid);
-        return client != null
-                ? new ResponseEntity<>(client, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @PutMapping(value = "/clients/{id}")
-    public ResponseEntity<?> update(@PathVariable(name = "uuid") int uuid, @RequestBody Client client) {
-        final boolean updated = clientService.update(client, uuid);
-        return updated
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-    }
-
-    @DeleteMapping(value = "/clients/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "uuid") int uuid) {
-        final boolean deleted = clientService.delete(uuid);
-        return deleted
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    @GetMapping(path = "/all")
+    public @ResponseBody Iterable<Client> findAllClients() {
+        return clientRepository.findAll();
     }
 }
