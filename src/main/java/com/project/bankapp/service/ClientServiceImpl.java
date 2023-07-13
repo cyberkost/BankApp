@@ -1,37 +1,49 @@
 package com.project.bankapp.service;
 
 import com.project.bankapp.entity.Client;
-import org.springframework.context.annotation.Bean;
+import com.project.bankapp.repository.ClientRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-
+@RequiredArgsConstructor
 @Component
 public class ClientServiceImpl implements ClientService {
 
+    private final ClientRepository clientRepository;
     @Override
-    public void create(Client client) {
-
+    @Transactional
+    public void createClient(Client client) {
+        clientRepository.save(client);
     }
 
     @Override
-    public List<Client> readAll() {
-        return null;
+    @Transactional
+    public List<Client> findAllClients() {
+        return clientRepository.findAll();
     }
 
     @Override
-    public Client read(int id) {
-        return null;
+    @Transactional
+    public Client findByUuid(UUID uuid) {
+        Optional<Client> clientOptional = clientRepository.findById(uuid);
+        return clientOptional.orElseThrow(() -> new RuntimeException());
     }
 
     @Override
-    public boolean update(Client client, int id) {
-        return false;
+    @Transactional
+    public void updateClient(Client updatedData, UUID uuid) {
+        Optional<Client> clientOptional = clientRepository.findById(uuid);
+        Client clientForUpdate = clientOptional.orElseThrow(() -> new RuntimeException());
+        if (updatedData.getFirstName() != null) {
+            clientForUpdate.setFirstName(updatedData.getFirstName());
+        }
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    @Transactional
+    public void deleteClient(UUID uuid) {
+        clientRepository.deleteById(uuid);
     }
 }

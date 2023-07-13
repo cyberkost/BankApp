@@ -3,11 +3,12 @@ package com.project.bankapp.service;
 import com.project.bankapp.entity.Client;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ClientService {
-    void create(Client client);
-    List<Client> readAll();
-    Client read(int id);
-    boolean update(Client client, int id);
-    boolean delete(int id);
+    void createClient(Client client);
+    List<Client> findAllClients();
+    Client findByUuid(UUID uuid);
+    void updateClient(Client client, UUID uuid);
+    void deleteClient(UUID uuid);
 }

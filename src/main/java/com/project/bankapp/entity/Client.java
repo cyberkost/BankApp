@@ -18,12 +18,11 @@ import java.util.UUID;
 @Table(name = "clients")
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "uuid")
     private UUID uuid;
 
-    //    @ManyToOne
-    @JoinColumn(name = "manager_uuid")
+    @Column(name = "manager_uuid")
     private UUID managerUuid;
 
     @Column(name = "first_name", length = 100)
