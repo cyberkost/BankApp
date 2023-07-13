@@ -3,6 +3,8 @@ package com.project.bankapp.controller;
 import com.project.bankapp.entity.Client;
 import com.project.bankapp.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,27 +19,32 @@ public class ClientController {
     private final ClientService clientService;
 
     @PostMapping("/create")
-    public void createClient(@RequestBody Client client) {
+    public ResponseEntity<String> createClient(@RequestBody Client client) {
         clientService.createClient(client);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/getall")
-    public List<Client> getAllClients() {
-        return clientService.findAllClients();
+    public ResponseEntity<List<Client>> getAllClients() {
+        List<Client> clients = clientService.findAllClients();
+        return ResponseEntity.ok(clients);
     }
 
     @GetMapping("/get/{uuid}")
-    public Client getClientById(@PathVariable UUID uuid) {
-        return clientService.findByUuid(uuid);
+    public ResponseEntity<Client> getClientById(@PathVariable UUID uuid) {
+        Client client = clientService.findByUuid(uuid);
+        return ResponseEntity.ok(client);
     }
 
     @PutMapping("/update/{uuid}")
-    public void updateClient(@PathVariable UUID uuid, @RequestBody Client updatedClient) {
+    public ResponseEntity<String> updateClient(@PathVariable UUID uuid, @RequestBody Client updatedClient) {
         clientService.updateClient(updatedClient, uuid);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/delete/{uuid}")
-    public void deleteClient(@PathVariable UUID uuid) {
+    public ResponseEntity<String> deleteClient(@PathVariable UUID uuid) {
         clientService.deleteClient(uuid);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
