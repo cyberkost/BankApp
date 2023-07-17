@@ -7,19 +7,19 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Table(name = "managers")
 public class Manager {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "uuid")
+    @Column(name = "manager_uuid")
     private UUID uuid;
+
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+    private List<Client> clients;
 
     @Column(name = "first_name", length = 100)
     private String firstName;

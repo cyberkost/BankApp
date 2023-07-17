@@ -11,4 +11,5 @@ public interface ClientService {
     Client findByUuid(UUID uuid);
     void updateClient(Client client, UUID uuid);
     void deleteClient(UUID uuid);
+    List<Client> findByFirstName(String firstName);
 }

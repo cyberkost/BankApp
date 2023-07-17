@@ -10,24 +10,27 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Table(name = "accounts")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "uuid")
+    @Column(name = "account_uuid")
     private UUID uuid;
 
-    //    @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "client_uuid")
-    private UUID clientUuid;
+    private Client client;
+
+    @OneToMany(mappedBy = "debitAccount", cascade = CascadeType.ALL)
+    private List<Transaction> debitTransactions;
+
+    @OneToMany(mappedBy = "creditAccount", cascade = CascadeType.ALL)
+    private List<Transaction> creditTransactions;
 
     @Column(name = "name", length = 100)
     private String name;

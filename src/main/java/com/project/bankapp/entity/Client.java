@@ -7,23 +7,24 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Table(name = "clients")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "uuid")
+    @Column(name = "client_uuid")
     private UUID uuid;
 
-    @Column(name = "manager_uuid")
-    private UUID managerUuid;
+    @ManyToOne
+    @JoinColumn(name = "manager_uuid")
+    private Manager manager;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Account> accounts;
 
     @Column(name = "first_name", length = 100)
     private String firstName;
@@ -46,9 +47,6 @@ public class Client {
     @Column(name = "phone", length = 100)
     private String phone;
 
-    @Column(name = "tax_code", length = 50)
-    private String taxCode;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ClientStatus status;
@@ -63,4 +61,19 @@ public class Client {
 
     @Column(name = "is_deleted", columnDefinition = "boolean default false")
     private boolean isDeleted;
+
+    public Client() {
+
+    }
+
+    public Client(String firstName, String lastName, String age, String citizenship, String email, String address, String phone, ClientStatus status) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.citizenship = citizenship;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.status = status;
+    }
 }

@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+
 @RequiredArgsConstructor
 @Component
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+
     @Override
     @Transactional
     public void createClient(Client client) {
@@ -39,6 +41,27 @@ public class ClientServiceImpl implements ClientService {
         if (updatedData.getFirstName() != null) {
             clientForUpdate.setFirstName(updatedData.getFirstName());
         }
+        if (updatedData.getLastName() != null) {
+            clientForUpdate.setLastName(updatedData.getLastName());
+        }
+        if (updatedData.getAge() != null) {
+            clientForUpdate.setAge(updatedData.getAge());
+        }
+        if (updatedData.getCitizenship() != null) {
+            clientForUpdate.setCitizenship(updatedData.getCitizenship());
+        }
+        if (updatedData.getEmail() != null) {
+            clientForUpdate.setEmail(updatedData.getEmail());
+        }
+        if (updatedData.getAddress() != null) {
+            clientForUpdate.setAddress(updatedData.getAddress());
+        }
+        if (updatedData.getPhone() != null) {
+            clientForUpdate.setPhone(updatedData.getPhone());
+        }
+        if (updatedData.getStatus() != null) {
+            clientForUpdate.setStatus(updatedData.getStatus());
+        }
     }
 
     @Override
@@ -46,4 +69,11 @@ public class ClientServiceImpl implements ClientService {
     public void deleteClient(UUID uuid) {
         clientRepository.deleteById(uuid);
     }
+
+    @Override
+    public List<Client> findByFirstName(String firstName) {
+        return clientRepository.findClientByFirstName(firstName);
+    }
+
+
 }

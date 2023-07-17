@@ -12,10 +12,6 @@ import java.util.UUID;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Table(name = "agreements")
 public class Agreement {
     @Id
@@ -24,7 +20,7 @@ public class Agreement {
     private UUID uuid;
 
     //    @ManyToOne
-    @JoinColumn(name = "account_uuid")
+    @Column(name = "account_uuid")
     private UUID accountUuid;
 
     @Column(name = "interest_rate", precision = 6, scale = 4)

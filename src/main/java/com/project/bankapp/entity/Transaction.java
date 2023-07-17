@@ -11,10 +11,6 @@ import java.util.UUID;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Table(name = "transactions")
 public class Transaction {
     @Id
@@ -22,13 +18,13 @@ public class Transaction {
     @Column(name = "uuid")
     private UUID uuid;
 
-    //    @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "debit_account_uuid")
-    private UUID debitAccountUuid; //Sender
+    private Account debitAccount;
 
-    //    @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "credit_account_uuid")
-    private UUID creditAccountUuid; //Recipient
+    private Account creditAccount;
 
     @Column(name = "type")
     private TransactionType type;

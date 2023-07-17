@@ -12,10 +12,6 @@ import java.sql.Timestamp;
 import java.util.UUID;
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Table(name = "products")
 public class Product {
     @Id
@@ -24,7 +20,7 @@ public class Product {
     private UUID uuid;
 
     //    @ManyToOne
-    @JoinColumn(name = "manager_uuid")
+    @Column(name = "manager_uuid")
     private UUID managerUuid;
 
     @Column(name = "name", length = 100)
