@@ -41,15 +41,15 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping("/filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model) {
-        Iterable<Client> clients;
-        if (filter != null && filter.isEmpty()) {
-            clients = clientRepository.findClientByFirstName(filter);
-        } else {
-            clients = clientRepository.findAll();
-        }
-        model.put("clients", clients);
-        return "main";
-    }
+//    @PostMapping("/filter")
+//    public String filter(@RequestParam String filter, Map<String, Object> model) {
+//        Iterable<Client> clients;
+//        if (filter != null && filter.isEmpty()) {
+//            clients = clientRepository.findClientByFirstName(filter);
+//        } else {
+//            clients = clientRepository.findAll();
+//        }
+//        model.put("clients", clients);
+//        return "main";
+//    }
 }
