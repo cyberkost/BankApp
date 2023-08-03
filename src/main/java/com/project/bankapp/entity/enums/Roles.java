@@ -1,6 +1,6 @@
 package com.project.bankapp.entity.enums;
 
-public enum SecurityRoles {
+public enum Roles {
     USER,
     ADMIN
 }

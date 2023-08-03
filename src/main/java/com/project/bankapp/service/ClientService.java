@@ -1,15 +1,26 @@
 package com.project.bankapp.service;
 
-import com.project.bankapp.entity.Client;
+import com.project.bankapp.dto.ClientDto;
 
 import java.util.List;
 import java.util.UUID;
 
+
 public interface ClientService {
-    void createClient(Client client);
-    List<Client> findAllClients();
-    Client findByUuid(UUID uuid);
-    void updateClient(Client client, UUID uuid);
-    void deleteClient(UUID uuid);
-    List<Client> findByFirstName(String firstName);
+    void create(ClientDto clientDto);
+
+    List<ClientDto> findAll();
+
+    ClientDto findById(String uuid);
+
+    void update(String uuid, ClientDto updatedClientDto);
+
+    void delete(String uuid);
+
+    List<ClientDto> findDeletedClients();
+
+    List<ClientDto> findAllNotDeleted();
+
+    List<ClientDto> findActiveClients();
+
 }

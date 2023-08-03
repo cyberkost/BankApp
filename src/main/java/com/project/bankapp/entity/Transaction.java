@@ -1,5 +1,6 @@
 package com.project.bankapp.entity;
 
+import com.project.bankapp.entity.enums.CurrencyCode;
 import com.project.bankapp.entity.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,6 +11,9 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "transactions")
 public class Transaction {
@@ -18,24 +22,26 @@ public class Transaction {
     @Column(name = "uuid")
     private UUID uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "debit_account_uuid")
-    private Account debitAccount;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Timestamp createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "credit_account_uuid")
-    private Account creditAccount;
+    @Column(name = "debit_account_uuid")
+    private UUID debitAccountUuid;
+
+    @Column(name = "credit_account_uuid")
+    private UUID creditAccountUuid;
 
     @Column(name = "type")
     private TransactionType type;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "currency_code")
+    private CurrencyCode currencyCode;
 
     @Column(name = "amount", precision = 12, scale = 2)
     private BigDecimal amount;
 
     @Column(name = "description")
     private String description;
-
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private Timestamp createdAt;
 }

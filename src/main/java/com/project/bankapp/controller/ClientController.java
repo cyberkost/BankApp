@@ -1,6 +1,6 @@
 package com.project.bankapp.controller;
 
-import com.project.bankapp.entity.Client;
+import com.project.bankapp.dto.ClientDto;
 import com.project.bankapp.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,42 +8,48 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/bank")
 public class ClientController {
 
     private final ClientService clientService;
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createClient(@RequestBody Client client) {
-        clientService.createClient(client);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    @PostMapping(value ="/client/create")
+    public ResponseEntity<ClientDto> createClient(@RequestBody ClientDto clientDto) {
+        clientService.create(clientDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientDto);
     }
 
-    @GetMapping("/getall")
-    public ResponseEntity<List<Client>> getAllClients() {
-        List<Client> clients = clientService.findAllClients();
-        return ResponseEntity.ok(clients);
+    @GetMapping(value ="/client/find-all")
+    public ResponseEntity<List<ClientDto>> findAllClients() {
+        List<ClientDto> clientDtoList = clientService.findAllNotDeleted();
+        return clientDtoList.isEmpty() ? ResponseEntity.noContent()
+                .build() : ResponseEntity.ok(clientDtoList);
     }
 
-    @GetMapping("/get/{uuid}")
-    public ResponseEntity<Client> getClientById(@PathVariable UUID uuid) {
-        Client client = clientService.findByUuid(uuid);
-        return ResponseEntity.ok(client);
+    @GetMapping(value ="/client/find/{uuid}")
+    public ResponseEntity<ClientDto> getClientByUuid(@PathVariable String uuid) {
+        ClientDto clientDto = clientService.findById(uuid);
+        return ResponseEntity.ok(clientDto);
     }
 
-    @PutMapping("/update/{uuid}")
-    public ResponseEntity<String> updateClient(@PathVariable UUID uuid, @RequestBody Client updatedClient) {
-        clientService.updateClient(updatedClient, uuid);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    @PutMapping(value ="/client/update/{uuid}")
+    public ResponseEntity<ClientDto> updateClient(@PathVariable String uuid, @RequestBody ClientDto updatedClientDto) {
+        clientService.update(uuid, updatedClientDto);
+        return ResponseEntity.ok(updatedClientDto);
     }
 
-    @DeleteMapping("/delete/{uuid}")
-    public ResponseEntity<String> deleteClient(@PathVariable UUID uuid) {
-        clientService.deleteClient(uuid);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    @DeleteMapping(value ="/client/delete/{uuid}")
+    public ResponseEntity<String> deleteClient(@PathVariable String uuid) {
+        clientService.delete(uuid);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value ="/client/find-all/active-clients")
+    public ResponseEntity<List<ClientDto>> findActiveClients() {
+        List<ClientDto> clientDtoList = clientService.findActiveClients();
+        return clientDtoList.isEmpty() ? ResponseEntity.noContent()
+                .build() : ResponseEntity.ok(clientDtoList);
     }
 }
