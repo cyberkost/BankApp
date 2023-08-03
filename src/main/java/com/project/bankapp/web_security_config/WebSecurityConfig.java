@@ -34,15 +34,10 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/v3/api-docs/**").permitAll();
                     auth.requestMatchers("/swagger-ui/**").permitAll();
                     auth.requestMatchers("/swagger-ui.html").permitAll();
+
                     auth.requestMatchers("/registration").permitAll();
 
-                    auth.requestMatchers("/account/create/with-client-id/{uuid}").hasRole(Roles.USER.name());
-                    auth.requestMatchers("/account/find/all/by-client-id/{uuid}").hasRole(Roles.USER.name());
-                    auth.requestMatchers("/client/find/{uuid}").hasRole(Roles.USER.name());
-                    auth.requestMatchers("/client/update/{uuid}").hasRole(Roles.USER.name());
-
-//                    auth.requestMatchers("/account/**").hasRole(Roles.ADMIN.name());
-//                    auth.requestMatchers("/client/**").hasRole(Roles.ADMIN.name());
+                    auth.requestMatchers("/**").hasRole(Roles.USER.name());
                     auth.requestMatchers("/**").hasRole(Roles.ADMIN.name());
                 })
                 .formLogin(formLogin -> formLogin.defaultSuccessUrl("/swagger-ui.html"))
