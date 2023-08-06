@@ -9,5 +9,5 @@ public class ManagerDto {
     private String firstName;
     private String lastName;
     private String status;
-    private String position;
+    private String description;
 }

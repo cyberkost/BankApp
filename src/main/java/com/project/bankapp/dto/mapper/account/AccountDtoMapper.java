@@ -5,12 +5,8 @@ import com.project.bankapp.entity.Account;
 import com.project.bankapp.entity.enums.AccountStatus;
 import com.project.bankapp.entity.enums.AccountType;
 import com.project.bankapp.entity.enums.CurrencyCode;
-import com.project.bankapp.exception.DataNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Component
