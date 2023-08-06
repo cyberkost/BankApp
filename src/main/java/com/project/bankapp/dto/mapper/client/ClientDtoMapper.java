@@ -3,12 +3,8 @@ package com.project.bankapp.dto.mapper.client;
 import com.project.bankapp.dto.ClientDto;
 import com.project.bankapp.entity.Client;
 import com.project.bankapp.entity.enums.ClientStatus;
-import com.project.bankapp.exception.DataNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -40,13 +36,5 @@ public class ClientDtoMapper {
                 .address(clientDto.getAddress())
                 .phone(clientDto.getPhone())
                 .build();
-    }
-    public List<ClientDto> getDtoList(List<Client> clientList) {
-        return Optional.ofNullable(clientList)
-                .orElseThrow(() -> new DataNotFoundException("list is null"))
-                .stream()
-                .filter(Objects::nonNull)
-                .map(this::mapEntityToDto)
-                .toList();
     }
 }

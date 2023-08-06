@@ -48,8 +48,6 @@ public class AccountServiceImpl implements AccountService {
         UUID clientUuid = UUID.fromString(uuid);
         Account account = accountCreationMapper.mapDtoToEntity(accountDto);
         account.setClientUuid(clientUuid);
-        account.setBalance(BigDecimal.ZERO);
-        account.setStatus(AccountStatus.PENDING);
         accountRepository.save(account);
     }
 

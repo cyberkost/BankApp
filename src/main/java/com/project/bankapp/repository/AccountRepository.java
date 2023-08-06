@@ -17,4 +17,6 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     List<Account> findAllDeleted();
 
     List<Account> findAccountsByStatus(AccountStatus status);
+
+    List<Account> findAccountsByClientUuid(UUID uuid);
 }
