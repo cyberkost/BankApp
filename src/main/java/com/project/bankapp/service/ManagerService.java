@@ -9,6 +9,8 @@ public interface ManagerService {
 
     void create(ManagerDto managerDto);
 
+    void save(Manager manager);
+
     List<Manager> findAll();
 
     List<ManagerDto> findAllNotDeleted();

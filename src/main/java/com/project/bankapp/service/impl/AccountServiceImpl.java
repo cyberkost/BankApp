@@ -11,6 +11,7 @@ import com.project.bankapp.repository.AccountRepository;
 import com.project.bankapp.service.AccountService;
 import com.project.bankapp.utils.updater.AccountUpdater;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final AccountDtoMapper accountDtoMapper;
@@ -37,6 +39,7 @@ public class AccountServiceImpl implements AccountService {
         }
         Account account = accountDtoMapper.mapDtoToEntity(accountDto);
         accountRepository.save(account);
+        log.info("account created");
     }
 
     @Override
@@ -48,6 +51,8 @@ public class AccountServiceImpl implements AccountService {
         UUID clientUuid = UUID.fromString(uuid);
         Account account = accountCreationMapper.mapDtoToEntity(accountDto);
         account.setClientUuid(clientUuid);
+        account.setBalance(BigDecimal.ZERO);
+        account.setStatus(AccountStatus.PENDING);
         accountRepository.save(account);
     }
 
@@ -58,6 +63,7 @@ public class AccountServiceImpl implements AccountService {
             throw new IllegalArgumentException();
         }
         UUID uuid = UUID.fromString(accountUuid);
+        log.info("retrieving account by id {}", uuid);
         return accountDtoMapper.mapEntityToDto(accountRepository.findById(uuid)
                 .orElseThrow(() -> new DataNotFoundException(String.valueOf(uuid))));
     }
@@ -68,6 +74,7 @@ public class AccountServiceImpl implements AccountService {
         if (uuid == null) {
             throw new IllegalArgumentException();
         }
+        log.info("retrieving account by id {}", uuid);
         return accountRepository.findById(uuid)
                 .orElseThrow(() -> new DataNotFoundException(String.valueOf(uuid)));
     }
@@ -75,6 +82,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public List<AccountDto> findAllNotDeleted() {
+        log.info("retrieving list of accounts");
         List<Account> accounts = accountRepository.findAllNotDeleted();
         return getDtoList(accounts);
     }
@@ -82,6 +90,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public List<AccountDto> findDeletedAccounts() {
+        log.info("retrieving list of deleted accounts");
         List<Account> accounts = accountRepository.findAllDeleted();
         return getDtoList(accounts);
     }
@@ -89,9 +98,26 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public List<AccountDto> findAllByStatus(String status) {
+        log.info("retrieving list of accounts by status {}", status);
         List<Account> accounts = accountRepository.findAccountsByStatus(AccountStatus.valueOf(status));
         return getDtoList(accounts);
     }
+
+    @Override
+    @Transactional
+    public List<AccountDto> findAllDtoByClientId(String clientUuid) {
+        if (clientUuid == null) {
+            throw new IllegalArgumentException();
+        }
+        UUID uuid = UUID.fromString(clientUuid);
+        log.info("retrieving list of accounts by client id {}", uuid);
+        List<Account> accounts = accountRepository.findAccountsByClientUuid(uuid)
+                .stream()
+                .filter(account -> !account.isDeleted())
+                .toList();
+        return getDtoList(accounts);
+    }
+
 
     @Override
     @Transactional
@@ -105,6 +131,7 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new DataNotFoundException(String.valueOf(uuid)));
         account = accountUpdater.update(account, updatedAccount);
         accountRepository.save(account);
+        log.info("updated account id {}", uuid);
     }
 
     @Override
@@ -117,6 +144,7 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new DataNotFoundException(String.valueOf(uuid)));
         account = accountUpdater.update(account, updatedAccount);
         accountRepository.save(account);
+        log.info("updated account id {}", uuid);
     }
 
     @Override
@@ -130,9 +158,10 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new DataNotFoundException(String.valueOf(uuid)));
         account.setDeleted(true);
         accountRepository.save(account);
+        log.info("deleted account id {}", uuid);
     }
 
-    public List<AccountDto> getDtoList(List<Account> accountList) {
+    private List<AccountDto> getDtoList(List<Account> accountList) {
         return Optional.ofNullable(accountList)
                 .orElseThrow(() -> new DataNotFoundException("list is null"))
                 .stream()
