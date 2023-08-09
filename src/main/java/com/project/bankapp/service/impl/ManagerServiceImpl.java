@@ -3,6 +3,7 @@ package com.project.bankapp.service.impl;
 import com.project.bankapp.dto.ManagerDto;
 import com.project.bankapp.dto.mapper.manager.ManagerDtoMapper;
 import com.project.bankapp.entity.Manager;
+import com.project.bankapp.entity.enums.ManagerStatus;
 import com.project.bankapp.exception.DataNotFoundException;
 import com.project.bankapp.repository.ManagerRepository;
 import com.project.bankapp.service.ManagerService;
@@ -106,6 +107,22 @@ public class ManagerServiceImpl implements ManagerService {
         manager.setDeleted(true);
         managerRepository.save(manager);
         log.info("deleted manager id {}", uuid);
+    }
+
+    @Override
+    @Transactional
+    public List<Manager> findManagersSortedByClientQuantityWhereManagerStatusIs(ManagerStatus status) {
+        log.info("retrieving list of managers sorted by status {}", status);
+        List<Manager> managers = managerRepository.findManagersSortedByClientCountWhereManagerStatusIs(status);
+        return managers == null ? Collections.emptyList() : managers;
+    }
+
+    @Override
+    public Manager getFirstManager(List<Manager> managers) {
+        return managers
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new DataNotFoundException("null"));
     }
 
     private List<ManagerDto> getDtoList(List<Manager> managers) {
