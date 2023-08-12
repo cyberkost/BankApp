@@ -2,6 +2,7 @@ package com.project.bankapp.service;
 
 import com.project.bankapp.dto.TransactionDto;
 import com.project.bankapp.entity.Transaction;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -18,5 +19,7 @@ public interface TransactionService {
 
     List<TransactionDto> findAllTransactionsByClientId(String uuid);
 
-//    void transferFunds(Transaction transaction);
+    void transferFunds(Transaction transaction);
+
+
 }

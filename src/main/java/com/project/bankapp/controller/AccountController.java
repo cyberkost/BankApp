@@ -1,7 +1,6 @@
 package com.project.bankapp.controller;
 
 import com.project.bankapp.dto.AccountDto;
-import com.project.bankapp.entity.Account;
 import com.project.bankapp.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +17,11 @@ public class AccountController {
 
     private final AccountService accountService;
 
+    /**
+     * Create new account
+     * @param accountDto the account to create
+     * @return the created account
+     */
     @PostMapping(value = "/account/create")
     public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto accountDto) {
         log.info("endpoint request: create new account");

@@ -12,6 +12,7 @@ import com.project.bankapp.utils.updater.ClientUpdater;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -118,6 +119,16 @@ public class ClientServiceImpl implements ClientService {
         log.info("retrieving list of active clients");
         List<Client> clients = clientRepository.findClientsByStatusIs(ClientStatus.ACTIVE);
         return getDtoList(clients);
+    }
+
+    @Override
+    @Transactional
+    public boolean isClientStatusActive(UUID uuid) {
+        if (uuid == null) {
+            throw new IllegalArgumentException();
+        }
+        log.info("checking status for client id {}", uuid);
+        return clientRepository.isClientStatusBlocked(uuid);
     }
 
     private List<ClientDto> getDtoList(List<Client> clientList) {

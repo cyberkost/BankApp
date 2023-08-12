@@ -8,7 +8,6 @@ import lombok.Data;
 public class ClientRegistrationDto {
     private String firstName;
     private String lastName;
-    private String taxCode;
     private String address;
     private String phone;
     private String email;
