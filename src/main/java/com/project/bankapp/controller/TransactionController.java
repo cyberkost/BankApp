@@ -1,6 +1,7 @@
 package com.project.bankapp.controller;
 
 import com.project.bankapp.dto.TransactionDto;
+import com.project.bankapp.entity.Transaction;
 import com.project.bankapp.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,5 +50,12 @@ public class TransactionController {
         log.info("endpoint request: find incoming transaction by uuid {}", uuid);
         List<TransactionDto> transactionList = transactionService.findIncomingTransactions(uuid);
         return transactionList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionList);
+    }
+
+    @PostMapping(value = "/transaction/transfer")
+    public ResponseEntity<String> transferFunds(@RequestBody Transaction transaction) {
+        log.info("endpoint request: execute money transfer");
+        transactionService.transferFunds(transaction);
+        return ResponseEntity.ok().build();
     }
 }
