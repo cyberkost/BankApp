@@ -100,7 +100,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public void transferFunds(Transaction transaction) {
+    public void transferFunds(TransactionDto transactionDto) {
+        Transaction transaction = transactionDtoMapper.mapDtoToEntity(transactionDto);
+
         BigDecimal amount = transaction.getAmount();
         Account senderAccount = accountService.findById(transaction.getDebitAccountUuid());
         Account recipientAccount = accountService.findById(transaction.getCreditAccountUuid());
@@ -110,7 +112,7 @@ public class TransactionServiceImpl implements TransactionService {
         checkAccountStatusNotNull(senderAccount, recipientAccount);
         checkSufficientFunds(amount, senderAccount);
         checkAccountsStatusActive(senderAccount, recipientAccount);
-        checkClientsStatusActive(senderAccount, recipientAccount);
+//        checkClientsStatusActive(senderAccount, recipientAccount);
 
         CurrencyCode senderCurrency = senderAccount.getCurrencyCode();
         transaction.setCurrencyCode(senderCurrency);
@@ -164,9 +166,11 @@ public class TransactionServiceImpl implements TransactionService {
 
     private void checkClientsStatusActive(Account senderAccount, Account recipientAccount) {
         boolean isSenderActive = clientService.isClientStatusActive(senderAccount.getClientUuid());
+        log.info("sender active {}", isSenderActive);
         boolean isRecipientActive = clientService.isClientStatusActive(recipientAccount.getClientUuid());
+        log.info("recipient active {}", isRecipientActive);
         if (!isSenderActive || !isRecipientActive) {
-            throw new TransactionNotAllowedException();
+            throw new TransactionNotAllowedException("Client is not active");
         }
     }
 

@@ -19,7 +19,7 @@ public interface TransactionService {
 
     List<TransactionDto> findAllTransactionsByClientId(String uuid);
 
-    void transferFunds(Transaction transaction);
+    void transferFunds(TransactionDto transactionDto);
 
 
 }

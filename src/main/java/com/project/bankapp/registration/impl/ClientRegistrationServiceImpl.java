@@ -49,6 +49,7 @@ public class ClientRegistrationServiceImpl implements ClientRegistrationService 
                 .phone(registration.getPhone())
                 .build();
     }
+
     @Override
     @Transactional
     public void registerNewClient(ClientRegistrationDto clientRegistrationDto) {
@@ -58,11 +59,8 @@ public class ClientRegistrationServiceImpl implements ClientRegistrationService 
             throw new UserAlreadyExistsException("Unable to register username, already exists in DB");
         }
         saveClientCredentials(email, encodedPassword);
-
-        List<Manager> activeManagers = managerService
-                .findManagersSortedByClientQuantityWhereManagerStatusIs(ManagerStatus.ACTIVE);
+        List<Manager> activeManagers = managerService.findManagersSortedByClientQuantityWhereManagerStatusIs(ManagerStatus.ACTIVE);
         Manager firstManager = managerService.getFirstManager(activeManagers);
-
         Client client = initializeNewClientInstance(clientRegistrationDto);
         client.setManagerUuid(firstManager.getUuid());
         clientService.save(client);

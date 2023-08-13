@@ -3,11 +3,14 @@ package com.project.bankapp.service.impl;
 import com.project.bankapp.dto.ClientDto;
 import com.project.bankapp.dto.mapper.client.ClientCreationMapper;
 import com.project.bankapp.entity.Client;
+import com.project.bankapp.entity.Manager;
 import com.project.bankapp.entity.enums.ClientStatus;
+import com.project.bankapp.entity.enums.ManagerStatus;
 import com.project.bankapp.exception.DataNotFoundException;
 import com.project.bankapp.dto.mapper.client.ClientDtoMapper;
 import com.project.bankapp.repository.ClientRepository;
 import com.project.bankapp.service.ClientService;
+import com.project.bankapp.service.ManagerService;
 import com.project.bankapp.utils.updater.ClientUpdater;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +29,19 @@ public class ClientServiceImpl implements ClientService {
     private final ClientDtoMapper clientDtoMapper;
     private final ClientCreationMapper clientCreationMapper;
     private final ClientUpdater clientUpdater;
+    private final ManagerService managerService;
 
     @Override
     @Transactional
     public void create(ClientDto clientDto) {
+        log.info("creating client");
         Client client = clientDtoMapper.mapDtoToEntity(clientDto);
         client.setStatus(ClientStatus.ACTIVE);
+        if (client.getManagerUuid() == null) {
+            List<Manager> activeManagers = managerService.findManagersSortedByClientQuantityWhereManagerStatusIs(ManagerStatus.ACTIVE);
+            Manager firstManager = managerService.getFirstManager(activeManagers);
+            client.setManagerUuid(firstManager.getUuid());
+        }
         clientRepository.save(client);
         log.info("client created");
     }

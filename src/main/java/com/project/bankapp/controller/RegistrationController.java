@@ -1,7 +1,9 @@
 package com.project.bankapp.controller;
 
 import com.project.bankapp.dto.ClientRegistrationDto;
+import com.project.bankapp.dto.ManagerRegistrationDto;
 import com.project.bankapp.registration.ClientRegistrationService;
+import com.project.bankapp.registration.ManagerRegistrationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,11 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class RegistrationController {
     private final ClientRegistrationService clientRegistrationService;
+    private final ManagerRegistrationService managerRegistrationService;
 
     @PostMapping(value = "/new-client")
     public ResponseEntity<ClientRegistrationDto> registerClient(@RequestBody ClientRegistrationDto clientRegistrationDto) {
         log.info("endpoint request: new client registration");
         clientRegistrationService.registerNewClient(clientRegistrationDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(clientRegistrationDto);
+    }
+
+    @PostMapping(value = "/new-manager")
+    public ResponseEntity<ManagerRegistrationDto> registerManager(@RequestBody ManagerRegistrationDto managerRegistrationDto) {
+        log.info("endpoint request: new manager registration");
+        managerRegistrationService.registerNewManager(managerRegistrationDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(managerRegistrationDto);
     }
 }

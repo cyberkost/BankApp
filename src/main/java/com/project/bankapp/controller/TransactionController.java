@@ -53,9 +53,9 @@ public class TransactionController {
     }
 
     @PostMapping(value = "/transaction/transfer")
-    public ResponseEntity<String> transferFunds(@RequestBody Transaction transaction) {
+    public ResponseEntity<String> transferFunds(@RequestBody TransactionDto transactionDto) {
         log.info("endpoint request: execute money transfer");
-        transactionService.transferFunds(transaction);
+        transactionService.transferFunds(transactionDto);
         return ResponseEntity.ok().build();
     }
 }
