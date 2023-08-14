@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for handling client and manager registration operations.
+ */
 @RestController
 @RequestMapping("/registration")
 @RequiredArgsConstructor
@@ -21,6 +24,12 @@ public class RegistrationController {
     private final ClientRegistrationService clientRegistrationService;
     private final ManagerRegistrationService managerRegistrationService;
 
+    /**
+     * Registers a new client.
+     *
+     * @param clientRegistrationDto The DTO containing client registration information.
+     * @return A ResponseEntity with the registered ClientRegistrationDto.
+     */
     @PostMapping(value = "/new-client")
     public ResponseEntity<ClientRegistrationDto> registerClient(@RequestBody ClientRegistrationDto clientRegistrationDto) {
         log.info("endpoint request: new client registration");
@@ -28,6 +37,12 @@ public class RegistrationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(clientRegistrationDto);
     }
 
+    /**
+     * Registers a new manager.
+     *
+     * @param managerRegistrationDto The DTO containing manager registration information.
+     * @return A ResponseEntity with the registered ManagerRegistrationDto.
+     */
     @PostMapping(value = "/new-manager")
     public ResponseEntity<ManagerRegistrationDto> registerManager(@RequestBody ManagerRegistrationDto managerRegistrationDto) {
         log.info("endpoint request: new manager registration");

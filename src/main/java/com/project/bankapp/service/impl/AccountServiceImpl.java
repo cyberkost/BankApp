@@ -54,6 +54,7 @@ public class AccountServiceImpl implements AccountService {
         account.setBalance(BigDecimal.ZERO);
         account.setStatus(AccountStatus.PENDING);
         accountRepository.save(account);
+        log.info("account created");
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.project.bankapp.controller;
 
 import com.project.bankapp.dto.TransactionDto;
-import com.project.bankapp.entity.Transaction;
 import com.project.bankapp.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +16,12 @@ import java.util.List;
 public class TransactionController {
     private final TransactionService transactionService;
 
+    /**
+     * Creates a new transaction.
+     *
+     * @param transactionDto The DTO containing transaction information to be created.
+     * @return A ResponseEntity with the created TransactionDto.
+     */
     @PostMapping(value = "/transaction/create")
     public ResponseEntity<TransactionDto> createTransaction(@RequestBody TransactionDto transactionDto) {
         log.info("endpoint request: create transaction");
@@ -24,6 +29,11 @@ public class TransactionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(transactionDto);
     }
 
+    /**
+     * Retrieves a list of all transactions.
+     *
+     * @return A ResponseEntity with a list of TransactionDto objects, or no content if the list is empty.
+     */
     @GetMapping(value = "/transaction/find-all")
     public ResponseEntity<List<TransactionDto>> findAllTransactions() {
         log.info("endpoint request: find all transactions");
@@ -31,6 +41,12 @@ public class TransactionController {
         return transactionList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionList);
     }
 
+    /**
+     * Retrieves a transaction by its UUID.
+     *
+     * @param uuid The UUID of the transaction to retrieve.
+     * @return A ResponseEntity with the retrieved TransactionDto.
+     */
     @GetMapping(value = "/transaction/find/{uuid}")
     public ResponseEntity<TransactionDto> findTransactionByUuid(@PathVariable String uuid) {
         log.info("endpoint request: find transaction by uuid {}", uuid);
@@ -38,6 +54,12 @@ public class TransactionController {
         return ResponseEntity.ok(transactionDto);
     }
 
+    /**
+     * Retrieves outgoing transactions for a specific account.
+     *
+     * @param uuid The UUID of the account to retrieve outgoing transactions for.
+     * @return A ResponseEntity with a list of TransactionDto objects, or no content if the list is empty.
+     */
     @GetMapping(value = "/transaction/find/outgoing/{uuid}")
     public ResponseEntity<List<TransactionDto>> findOutgoingTransactions(@PathVariable String uuid) {
         log.info("endpoint request: find outgoing transactions by uuid {}", uuid);
@@ -45,6 +67,12 @@ public class TransactionController {
         return transactionList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionList);
     }
 
+    /**
+     * Retrieves incoming transactions for a specific account.
+     *
+     * @param uuid The UUID of the account to retrieve incoming transactions for.
+     * @return A ResponseEntity with a list of TransactionDto objects, or no content if the list is empty.
+     */
     @GetMapping(value = "/transaction/find/incoming/{uuid}")
     public ResponseEntity<List<TransactionDto>> findIncomingTransactions(@PathVariable String uuid) {
         log.info("endpoint request: find incoming transaction by uuid {}", uuid);
@@ -52,6 +80,12 @@ public class TransactionController {
         return transactionList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionList);
     }
 
+    /**
+     * Transfers funds between accounts.
+     *
+     * @param transactionDto The DTO containing transaction information for the funds transfer.
+     * @return A ResponseEntity indicating successful funds transfer.
+     */
     @PostMapping(value = "/transaction/transfer")
     public ResponseEntity<String> transferFunds(@RequestBody TransactionDto transactionDto) {
         log.info("endpoint request: execute money transfer");
