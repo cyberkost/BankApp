@@ -26,4 +26,6 @@ public interface ClientService {
 
     List<ClientDto> findActiveClients();
 
+    boolean isClientStatusActive(UUID uuid);
+
 }
