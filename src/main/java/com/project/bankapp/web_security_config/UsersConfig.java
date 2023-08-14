@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
+/**
+ * Configuration class for setting up initial users and authorities in the application.
+ */
 @Configuration
 @RequiredArgsConstructor
 public class UsersConfig {
@@ -21,13 +24,17 @@ public class UsersConfig {
     @Value("${admin.password}")
     private String adminPassword;
 
+    /**
+     * Creates initial users and assigns roles if they don't already exist.
+     * The method is invoked after the bean initialization.
+     */
     @PostConstruct
     public void createUsersAndAuthorities() {
         if (!userDetailsManager.userExists(adminUsername)) {
             String encodedPassword = passwordEncoder.encode(adminPassword);
             userDetailsManager.createUser(User.withUsername(adminUsername)
                     .password(encodedPassword)
-                    .roles(Roles.ADMIN.toString(), Roles.USER.toString())
+                    .roles(Roles.ADMIN.toString(), Roles.MANAGER.toString(), Roles.USER.toString())
                     .build());
         }
     }
