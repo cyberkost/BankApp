@@ -21,6 +21,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Service implementation class responsible for managing account-related operations.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j

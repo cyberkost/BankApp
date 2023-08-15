@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Service implementation class responsible for managing transaction-related operations.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j

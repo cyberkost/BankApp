@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller class responsible for handling transaction-related.
+ */
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -78,6 +81,19 @@ public class TransactionController {
         log.info("endpoint request: find incoming transaction by uuid {}", uuid);
         List<TransactionDto> transactionList = transactionService.findIncomingTransactions(uuid);
         return transactionList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionList);
+    }
+
+    /**
+     * Retrieves a list of transactions associated with a specific client.
+     *
+     * @param uuid The unique identifier of the client.
+     * @return ResponseEntity containing a list of TransactionDto objects if found, or a no-content response if empty.
+     */
+    @GetMapping(value = "/transaction/find/all-by-client/{uuid}")
+    public ResponseEntity<List<TransactionDto>> findAllTransactionsByClient(@PathVariable String uuid) {
+        log.info("endpoint request: find all transactions by client id {}", uuid);
+        List<TransactionDto> transactionDtoList = transactionService.findAllTransactionsByClientId(uuid);
+        return transactionDtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionDtoList);
     }
 
     /**

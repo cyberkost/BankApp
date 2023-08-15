@@ -14,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service implementation class responsible for handling manager registration operations.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -22,6 +25,12 @@ public class ManagerRegistrationServiceImpl implements ManagerRegistrationServic
     private final PasswordEncoder passwordEncoder;
     private final ManagerService managerService;
 
+    /**
+     * Saves manager credentials to the user details manager for authentication.
+     *
+     * @param login           The login or username associated with the manager.
+     * @param encodedPassword The encoded password to be stored.
+     */
     private void saveManagerCredentials(String login, String encodedPassword) {
         userDetailsManager.createUser(User.withUsername(login)
                 .password(encodedPassword)
@@ -29,6 +38,13 @@ public class ManagerRegistrationServiceImpl implements ManagerRegistrationServic
                 .build());
     }
 
+    /**
+     * Initializes a new Manager instance based on the provided registration DTO.
+     *
+     * @param managerRegistrationDto The DTO containing manager registration information.
+     * @return A newly constructed Manager instance.
+     * @throws IllegalArgumentException if the manager registration DTO is null.
+     */
     private Manager initializeNewManagerInstance(ManagerRegistrationDto managerRegistrationDto) {
         if (managerRegistrationDto == null) {
             throw new IllegalArgumentException("managerRegistrationDto cannot be null");
@@ -41,6 +57,12 @@ public class ManagerRegistrationServiceImpl implements ManagerRegistrationServic
                 .build();
     }
 
+    /**
+     * Registers a new manager.
+     *
+     * @param managerRegistrationDto The DTO containing manager registration information.
+     * @throws UserAlreadyExistsException if a user with the provided login already exists.
+     */
     @Override
     public void registerNewManager(ManagerRegistrationDto managerRegistrationDto) {
         String login = managerRegistrationDto.getLogin();

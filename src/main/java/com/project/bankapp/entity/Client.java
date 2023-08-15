@@ -7,9 +7,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.UUID;
 
+/**
+ * Entity class representing a client.
+ * This class maps to the "clients" table in the database and encapsulates client information.
+ */
 @Data
 @Builder
 @AllArgsConstructor

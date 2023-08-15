@@ -3,6 +3,9 @@ package com.project.bankapp.dto;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Data Transfer Object (DTO) class representing a manager.
+ */
 @Data
 @Builder
 public class ManagerDto {

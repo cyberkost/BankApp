@@ -10,6 +10,10 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+/**
+ * Entity class representing a financial transaction.
+ * This class maps to a database table named "transactions".
+ */
 @Data
 @Builder
 @NoArgsConstructor

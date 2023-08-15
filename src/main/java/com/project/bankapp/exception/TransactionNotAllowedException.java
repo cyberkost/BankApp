@@ -1,18 +1,14 @@
 package com.project.bankapp.exception;
+
 /**
- * Exception thrown when a transaction is not allowed or permitted.
+ * Custom exception class representing an exception when a transaction is not allowed or permitted.
+ * This exception can be thrown to indicate that a specific transaction operation is not allowed or authorized.
  */
 public class TransactionNotAllowedException extends RuntimeException {
     /**
-     * Constructs a new {@code TransactionNotAllowedException} with no detail message.
-     */
-    public TransactionNotAllowedException() {
-    }
-
-    /**
-     * Constructs a new {@code TransactionNotAllowedException} with the specified detail message.
+     * Constructs a new instance of the exception with the specified error message.
      *
-     * @param message the detail message
+     * @param message The error message explaining why the transaction is not allowed.
      */
     public TransactionNotAllowedException(String message) {
         super(message);

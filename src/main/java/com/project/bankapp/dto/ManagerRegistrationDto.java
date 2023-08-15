@@ -3,6 +3,10 @@ package com.project.bankapp.dto;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Data Transfer Object (DTO) class representing the registration information for a manager.
+ * This class encapsulates the necessary attributes for registering a new manager.
+ */
 @Data
 @Builder
 public class ManagerRegistrationDto {

@@ -5,6 +5,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+/**
+ * Entity class representing a user in the application.
+ * This class is mapped to the "users" table in the database.
+ */
 @Data
 @Entity
 @Table(name = "users")

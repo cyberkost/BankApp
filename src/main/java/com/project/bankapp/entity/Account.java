@@ -12,6 +12,10 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+/**
+ * Entity class representing an account in the system.
+ * This class defines the structure of an account, including its attributes and their annotations.
+ */
 @Data
 @Builder
 @NoArgsConstructor

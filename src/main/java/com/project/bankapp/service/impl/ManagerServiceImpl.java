@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Service implementation class responsible for managing operations related to managers.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
