@@ -5,6 +5,7 @@ import com.project.bankapp.dto.mapper.transaction.TransactionDtoMapper;
 import com.project.bankapp.entity.Account;
 import com.project.bankapp.entity.Transaction;
 import com.project.bankapp.entity.enums.AccountStatus;
+import com.project.bankapp.entity.enums.ClientStatus;
 import com.project.bankapp.entity.enums.CurrencyCode;
 import com.project.bankapp.exception.DataNotFoundException;
 import com.project.bankapp.exception.InsufficientFundsException;
@@ -24,6 +25,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Service implementation class responsible for managing transaction-related operations.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -113,7 +117,6 @@ public class TransactionServiceImpl implements TransactionService {
         checkSufficientFunds(amount, senderAccount);
         checkAccountsStatusActive(senderAccount, recipientAccount);
 //        checkClientsStatusActive(senderAccount, recipientAccount);
-
         CurrencyCode senderCurrency = senderAccount.getCurrencyCode();
         transaction.setCurrencyCode(senderCurrency);
         senderAccount.setBalance(senderAccount.getBalance().subtract(amount));

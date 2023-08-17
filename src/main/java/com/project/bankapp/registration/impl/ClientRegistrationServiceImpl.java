@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service implementation class responsible for handling client registration operations.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -29,6 +32,12 @@ public class ClientRegistrationServiceImpl implements ClientRegistrationService 
     private final ClientService clientService;
     private final ManagerService managerService;
 
+    /**
+     * Saves client credentials to the user details manager for authentication.
+     *
+     * @param email           The email associated with the client.
+     * @param encodedPassword The encoded password to be stored.
+     */
     private void saveClientCredentials(String email, String encodedPassword) {
         userDetailsManager.createUser(User.withUsername(email)
                 .password(encodedPassword)
@@ -36,6 +45,13 @@ public class ClientRegistrationServiceImpl implements ClientRegistrationService 
                 .build());
     }
 
+    /**
+     * Initializes a new Client instance based on the provided registration DTO.
+     *
+     * @param registration The DTO containing client registration information.
+     * @return A newly constructed Client instance.
+     * @throws IllegalArgumentException if the registration DTO is null.
+     */
     private Client initializeNewClientInstance(ClientRegistrationDto registration) {
         if (registration == null) {
             throw new IllegalArgumentException("registrationDto cannot be null");
@@ -50,6 +66,12 @@ public class ClientRegistrationServiceImpl implements ClientRegistrationService 
                 .build();
     }
 
+    /**
+     * Registers a new client.
+     *
+     * @param clientRegistrationDto The DTO containing client registration information.
+     * @throws UserAlreadyExistsException if a user with the provided email already exists.
+     */
     @Override
     @Transactional
     public void registerNewClient(ClientRegistrationDto clientRegistrationDto) {

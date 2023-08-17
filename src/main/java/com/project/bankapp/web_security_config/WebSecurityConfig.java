@@ -70,7 +70,6 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/manager/find/{uuid}").hasRole(Roles.MANAGER.name());
 
                     auth.requestMatchers("/**").hasRole(Roles.ADMIN.name());
-
                 })
                 .formLogin(formLogin -> formLogin.defaultSuccessUrl("/swagger-ui.html"))
                 .logout(Customizer.withDefaults())

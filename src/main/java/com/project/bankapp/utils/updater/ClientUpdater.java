@@ -3,9 +3,19 @@ package com.project.bankapp.utils.updater;
 import com.project.bankapp.entity.Client;
 import org.springframework.stereotype.Component;
 
+/**
+ * A utility class for updating client properties based on a client update DTO.
+ */
 @Component
 public class ClientUpdater {
-
+    /**
+     * Updates the provided client's properties based on the information in the client update DTO.
+     *
+     * @param client       The original client instance to be updated.
+     * @param clientUpdate The client update DTO containing the updated information.
+     * @return The updated client instance.
+     * @throws IllegalArgumentException if either the client or clientUpdate argument is null.
+     */
     public Client update(Client client, Client clientUpdate) {
         if (client == null || clientUpdate == null) {
             throw new IllegalArgumentException("argument is null");
@@ -13,6 +23,13 @@ public class ClientUpdater {
         return updateProperties(client, clientUpdate);
     }
 
+    /**
+     * Updates specific properties of the client based on the information in the client update DTO.
+     *
+     * @param client       The original client instance to be updated.
+     * @param clientUpdate The client update DTO containing the updated information.
+     * @return The updated client instance with the specified properties modified.
+     */
     public Client updateProperties(Client client, Client clientUpdate) {
         if (clientUpdate.getManagerUuid() != null) {
             client.setManagerUuid(clientUpdate.getManagerUuid());

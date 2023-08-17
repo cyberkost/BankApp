@@ -9,6 +9,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
+
+/**
+ * Entity class representing a manager in the system.
+ * This class holds the manager's information and is used to map to the "managers" database table.
+ */
 @Data
 @Builder
 @NoArgsConstructor

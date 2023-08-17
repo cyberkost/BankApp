@@ -9,8 +9,18 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+/**
+ * Component class responsible for mapping between Account and AccountDto objects.
+ */
 @Component
 public class AccountDtoMapper {
+    /**
+     * Maps an Account entity to an AccountDto.
+     *
+     * @param account The Account entity to be mapped.
+     * @return The corresponding AccountDto.
+     * @throws IllegalArgumentException if the provided account is null.
+     */
     public AccountDto mapEntityToDto(Account account) {
         if (account == null) {
             throw new IllegalArgumentException("account cannot be null");
@@ -25,6 +35,13 @@ public class AccountDtoMapper {
                 .build();
     }
 
+    /**
+     * Maps an AccountDto to an Account entity.
+     *
+     * @param accountDto The AccountDto to be mapped.
+     * @return The corresponding Account entity.
+     * @throws IllegalArgumentException if the provided accountDto is null.
+     */
     public Account mapDtoToEntity(AccountDto accountDto) {
         if (accountDto == null) {
             throw new IllegalArgumentException("account cannot be null");

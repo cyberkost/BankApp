@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/**
+ * Service implementation class responsible for managing client-related operations.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -82,7 +85,7 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public void update(String clientUuid, ClientDto updatedClientDto) {
         if (clientUuid == null || updatedClientDto == null) {
-        throw new IllegalArgumentException();
+            throw new IllegalArgumentException();
         }
         UUID uuid = UUID.fromString(clientUuid);
         Client updatedClient = clientCreationMapper.mapDtoToEntity(updatedClientDto);
