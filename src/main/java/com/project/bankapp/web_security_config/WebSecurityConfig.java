@@ -56,8 +56,6 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/swagger-ui/**").permitAll();
                     auth.requestMatchers("/swagger-ui.html").permitAll();
 
-                    auth.requestMatchers("/**").hasRole(Roles.ADMIN.name());
-
                     auth.requestMatchers("/registration/new-client").permitAll();
 
                     auth.requestMatchers("/client/find/{uuid}").hasRole(Roles.USER.name());
@@ -71,6 +69,7 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/transaction/**").hasRole(Roles.MANAGER.name());
                     auth.requestMatchers("/manager/find/{uuid}").hasRole(Roles.MANAGER.name());
 
+                    auth.requestMatchers("/**").hasRole(Roles.ADMIN.name());
                 })
                 .formLogin(formLogin -> formLogin.defaultSuccessUrl("/swagger-ui.html"))
                 .logout(Customizer.withDefaults())
