@@ -13,4 +13,10 @@ public class TransactionNotAllowedException extends RuntimeException {
     public TransactionNotAllowedException(String message) {
         super(message);
     }
+
+    /**
+     * Constructs a new {@code TransactionNotAllowedException} with no detail message.
+     */
+    public TransactionNotAllowedException() {
+    }
 }

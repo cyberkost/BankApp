@@ -1,6 +1,7 @@
 package com.project.bankapp.service.impl;
 
 import com.project.bankapp.dto.TransactionDto;
+import com.project.bankapp.dto.mapper.transaction.TransactionCreationMapper;
 import com.project.bankapp.dto.mapper.transaction.TransactionDtoMapper;
 import com.project.bankapp.entity.Account;
 import com.project.bankapp.entity.Transaction;
@@ -34,6 +35,7 @@ import java.util.UUID;
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
+    private final TransactionCreationMapper transactionCreationMapper;
     private final TransactionDtoMapper transactionDtoMapper;
     private final AccountService accountService;
     private final ClientService clientService;
