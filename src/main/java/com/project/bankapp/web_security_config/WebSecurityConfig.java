@@ -62,7 +62,8 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/client/update/{uuid}").hasRole(Roles.USER.name());
                     auth.requestMatchers("/account/create/with-client-id/{uuid}").hasRole(Roles.USER.name());
                     auth.requestMatchers("/transaction/create").hasRole(Roles.USER.name());
-                    auth.requestMatchers("/transaction/transfer/").hasRole(Roles.USER.name());
+                    auth.requestMatchers("/transaction/transfer").hasRole(Roles.USER.name());
+                    auth.requestMatchers("/transaction/find/all-by-client/{uuid}").hasRole(Roles.USER.name());
 
                     auth.requestMatchers("/account/**").hasRole(Roles.MANAGER.name());
                     auth.requestMatchers("/client/**").hasRole(Roles.MANAGER.name());

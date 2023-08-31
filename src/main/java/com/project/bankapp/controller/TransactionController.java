@@ -1,6 +1,7 @@
 package com.project.bankapp.controller;
 
 import com.project.bankapp.dto.TransactionDto;
+import com.project.bankapp.entity.Transaction;
 import com.project.bankapp.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

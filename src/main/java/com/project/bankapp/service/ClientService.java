@@ -83,4 +83,11 @@ public interface ClientService {
      */
     boolean isClientStatusActive(UUID uuid);
 
+    /**
+     * Checks if the Client with the specified UUID has an active status.
+     *
+     * @param uuid The UUID of the client to check.
+     * @return True if the Client has an active status, false otherwise.
+     */
+    boolean isClientStatusBlocked(UUID uuid);
 }

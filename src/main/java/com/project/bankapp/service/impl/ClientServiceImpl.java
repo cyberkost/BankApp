@@ -38,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public void create(ClientDto clientDto) {
         log.info("creating client");
-        Client client = clientDtoMapper.mapDtoToEntity(clientDto);
+        Client client = clientCreationMapper.mapDtoToEntity(clientDto);
         client.setStatus(ClientStatus.ACTIVE);
         if (client.getManagerUuid() == null) {
             List<Manager> activeManagers = managerService.findManagersSortedByClientQuantityWhereManagerStatusIs(ManagerStatus.ACTIVE);
@@ -137,6 +137,16 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public boolean isClientStatusActive(UUID uuid) {
+        if (uuid == null) {
+            throw new IllegalArgumentException();
+        }
+        log.info("checking status for client id {}", uuid);
+        return clientRepository.isClientStatusBlocked(uuid);
+    }
+
+    @Override
+    @Transactional
+    public boolean isClientStatusBlocked(UUID uuid) {
         if (uuid == null) {
             throw new IllegalArgumentException();
         }

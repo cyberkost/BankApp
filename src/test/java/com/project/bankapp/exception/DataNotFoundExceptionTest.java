@@ -9,10 +9,8 @@ class DataNotFoundExceptionTest {
     void constructor_withMessage_shouldSetMessage() {
         // given
         String message = "Data not found";
-
         // when
         DataNotFoundException exception = new DataNotFoundException(message);
-
         // then
         assertEquals(message, exception.getMessage());
     }

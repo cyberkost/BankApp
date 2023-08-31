@@ -27,7 +27,6 @@ class AccountUpdateMapperTest {
     void mapEntityToDto_validAccount_success() {
         // when
         AccountDto accountDto = accountUpdateMapper.mapEntityToDto(account1);
-
         // then
         assertEquals(account1.getName(), accountDto.getName());
         assertEquals(account1.getStatus().toString(), accountDto.getStatus());
@@ -42,10 +41,8 @@ class AccountUpdateMapperTest {
     void mapEntityToDto_accountWithNullProperties_returnsAccountDtoWithNullProperties() {
         // given
         Account account = new Account();
-
         // when
         AccountDto accountDto = accountUpdateMapper.mapEntityToDto(account);
-
         // then
         assertNull(accountDto.getName());
         assertNull(accountDto.getStatus());
@@ -56,10 +53,8 @@ class AccountUpdateMapperTest {
         // given
         accountDto.setName("Test AccountDto");
         accountDto.setStatus("ACTIVE");
-
         // when
         Account account = accountUpdateMapper.mapDtoToEntity(accountDto);
-
         // then
         assertFalse(account.isDeleted());
         assertEquals(accountDto.getName(), account.getName());
@@ -75,7 +70,6 @@ class AccountUpdateMapperTest {
     void mapDtoToEntity_missingAccountDtoProperties_returnsAccountWithNullProperties() {
         // when
         Account account = accountUpdateMapper.mapDtoToEntity(accountDto);
-
         // then
         assertFalse(account.isDeleted());
         assertNull(account.getClientUuid());

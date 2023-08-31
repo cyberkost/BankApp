@@ -29,7 +29,6 @@ class AccountCreationMapperTest {
     void mapEntityToDto_validAccount_success() {
         // when
         AccountDto accountDto = accountCreationMapper.mapEntityToDto(account1);
-
         // then
         assertEquals(account1.getName(), accountDto.getName());
         assertEquals(account1.getType().toString(), accountDto.getType());
@@ -45,10 +44,8 @@ class AccountCreationMapperTest {
     void mapEntityToDto_accountWithNullProperties_returnsAccountDtoWithNullProperties() {
         // given
         Account account = new Account();
-
         // when
         AccountDto accountDto = accountCreationMapper.mapEntityToDto(account);
-
         // then
         assertNull(accountDto.getName());
         assertNull(accountDto.getType());
@@ -61,10 +58,8 @@ class AccountCreationMapperTest {
         accountDto.setName("Test AccountDto");
         accountDto.setType("CURRENT");
         accountDto.setCurrencyCode("EUR");
-
         // when
         Account account = accountCreationMapper.mapDtoToEntity(accountDto);
-
         // then
         assertFalse(account.isDeleted());
         assertEquals(accountDto.getName(), account.getName());
@@ -81,7 +76,6 @@ class AccountCreationMapperTest {
     void mapDtoToEntity_missingAccountDtoProperties_returnsAccountWithNullProperties() {
         // when
         Account account = accountCreationMapper.mapDtoToEntity(accountDto);
-
         // then
         assertFalse(account.isDeleted());
         assertNull(account.getName());

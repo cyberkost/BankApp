@@ -10,10 +10,8 @@ class InsufficientFundsExceptionTest {
         // given
         String message = "Insufficient funds";
         InsufficientFundsException exception = new InsufficientFundsException(message);
-
         // when
         String actualMessage = exception.getMessage();
-
         // then
         assertEquals(message, actualMessage);
     }

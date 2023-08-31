@@ -9,10 +9,8 @@ class UserAlreadyExistsExceptionTest {
     void constructor_withMessage_shouldSetMessage() {
         // given
         String message = "User already exists";
-
         // when
         UserAlreadyExistsException exception = new UserAlreadyExistsException(message);
-
         // then
         assertEquals(message, exception.getMessage());
     }
