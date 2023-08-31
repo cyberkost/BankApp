@@ -82,9 +82,15 @@ public class ClientRegistrationServiceImpl implements ClientRegistrationService 
         }
         saveClientCredentials(email, encodedPassword);
         List<Manager> activeManagers = managerService.findManagersSortedByClientQuantityWhereManagerStatusIs(ManagerStatus.ACTIVE);
-        Manager firstManager = managerService.getFirstManager(activeManagers);
         Client client = initializeNewClientInstance(clientRegistrationDto);
-        client.setManagerUuid(firstManager.getUuid());
+        if (activeManagers.isEmpty()) {
+            List<Manager> managers = managerService.findAll();
+            Manager manager = managerService.getFirstManager(managers);
+            client.setManagerUuid(manager.getUuid());
+        } else {
+            Manager firstManager = managerService.getFirstManager(activeManagers);
+            client.setManagerUuid(firstManager.getUuid());
+        }
         clientService.save(client);
         log.info("client created");
     }

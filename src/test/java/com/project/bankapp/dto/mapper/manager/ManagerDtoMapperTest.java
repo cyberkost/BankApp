@@ -40,7 +40,6 @@ class ManagerDtoMapperTest {
     void mapEntityToDto_validManager_success() {
         // when
         ManagerDto managerDto = managerDtoMapper.mapEntityToDto(manager1);
-
         // then
         assertEquals(manager1.getFirstName(), managerDto.getFirstName());
         assertEquals(manager1.getLastName(), managerDto.getLastName());
@@ -52,10 +51,8 @@ class ManagerDtoMapperTest {
     void mapEntityToDto_missingManagerProperties_returnsManagerDtoWithNullProperties() {
         // given
         Manager manager = new Manager();
-
         // when
         ManagerDto managerDto = managerDtoMapper.mapEntityToDto(manager);
-
         // then
         assertNull(managerDto.getFirstName());
         assertNull(managerDto.getLastName());
@@ -75,10 +72,8 @@ class ManagerDtoMapperTest {
         managerDto.setLastName("Doe");
         managerDto.setStatus("ACTIVE");
         managerDto.setDescription("Manager 1");
-
         // when
         Manager manager = managerDtoMapper.mapDtoToEntity(managerDto);
-
         // then
         assertFalse(manager.isDeleted());
         assertEquals(managerDto.getFirstName(), manager.getFirstName());
@@ -91,10 +86,8 @@ class ManagerDtoMapperTest {
     void mapDtoToEntity_missingManagerDtoProperties_returnsManagerWithNullProperties() {
         // given
         ManagerDto managerDto = ManagerDto.builder().build();
-
         // when
         Manager manager = managerDtoMapper.mapDtoToEntity(managerDto);
-
         // then
         assertFalse(manager.isDeleted());
         assertNull(manager.getFirstName());

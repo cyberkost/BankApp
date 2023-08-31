@@ -10,10 +10,8 @@ class TransactionNotAllowedExceptionTest {
         // given
         String message = "Transaction not allowed";
         TransactionNotAllowedException exception = new TransactionNotAllowedException(message);
-
         // when
         String actualMessage = exception.getMessage();
-
         // then
         assertEquals(message, actualMessage);
     }
@@ -22,10 +20,8 @@ class TransactionNotAllowedExceptionTest {
     void getMessage_shouldReturnNullWhenNoMessageProvided() {
         // given
         TransactionNotAllowedException exception = new TransactionNotAllowedException();
-
         // when
         String actualMessage = exception.getMessage();
-
         // then
         assertNull(actualMessage);
     }

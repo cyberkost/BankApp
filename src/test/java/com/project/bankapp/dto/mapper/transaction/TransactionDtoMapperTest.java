@@ -46,7 +46,6 @@ class TransactionDtoMapperTest {
     void mapEntityToDto_validTransaction_success() {
         // when
         TransactionDto transactionDto = transactionDtoMapper.mapEntityToDto(transaction1);
-
         // then
         assertEquals(transaction1.getDebitAccountUuid().toString(), transactionDto.getDebitAccountUuid());
         assertEquals(transaction1.getCreditAccountUuid().toString(), transactionDto.getCreditAccountUuid());
@@ -60,10 +59,8 @@ class TransactionDtoMapperTest {
     void mapEntityToDto_missingTransactionProperties_returnsTransactionDtoWithNullProperties() {
         // given
         Transaction transaction = new Transaction();
-
         // when
         TransactionDto transactionDto = transactionDtoMapper.mapEntityToDto(transaction);
-
         // then
         assertNull(transactionDto.getDebitAccountUuid());
         assertNull(transactionDto.getCreditAccountUuid());
@@ -87,10 +84,8 @@ class TransactionDtoMapperTest {
         transactionDto.setCurrencyCode("EUR");
         transactionDto.setAmount(BigDecimal.valueOf(100));
         transactionDto.setDescription("Transaction 1");
-
         // when
         Transaction transaction = transactionDtoMapper.mapDtoToEntity(transactionDto);
-
         // then
         assertEquals(UUID.fromString(transactionDto.getDebitAccountUuid()), transaction.getDebitAccountUuid());
         assertEquals(UUID.fromString(transactionDto.getCreditAccountUuid()), transaction.getCreditAccountUuid());
@@ -109,10 +104,8 @@ class TransactionDtoMapperTest {
     void mapDtoToEntity_missingTransactionDtoProperties_returnsTransactionWithNullProperties() {
         // given
         TransactionDto transactionDto = TransactionDto.builder().build();
-
         // when
         Transaction transaction = transactionDtoMapper.mapDtoToEntity(transactionDto);
-
         // then
         assertNull(transaction.getDebitAccountUuid());
         assertNull(transaction.getCreditAccountUuid());

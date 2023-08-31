@@ -118,12 +118,13 @@ public class TransactionServiceImpl implements TransactionService {
         checkAccountStatusNotNull(senderAccount, recipientAccount);
         checkSufficientFunds(amount, senderAccount);
         checkAccountsStatusActive(senderAccount, recipientAccount);
-//        checkClientsStatusActive(senderAccount, recipientAccount);
+        checkClientsStatusActive(senderAccount, recipientAccount);
         CurrencyCode senderCurrency = senderAccount.getCurrencyCode();
         transaction.setCurrencyCode(senderCurrency);
         senderAccount.setBalance(senderAccount.getBalance().subtract(amount));
 
         performTransfer(transaction, amount, senderAccount, recipientAccount);
+        log.info("transfer complete");
     }
 
     private void performTransfer(Transaction transaction, BigDecimal amount, Account sender, Account recipient) {
@@ -170,11 +171,9 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     private void checkClientsStatusActive(Account senderAccount, Account recipientAccount) {
-        boolean isSenderActive = clientService.isClientStatusActive(senderAccount.getClientUuid());
-        log.info("sender active {}", isSenderActive);
-        boolean isRecipientActive = clientService.isClientStatusActive(recipientAccount.getClientUuid());
-        log.info("recipient active {}", isRecipientActive);
-        if (!isSenderActive || !isRecipientActive) {
+        boolean isSenderStatusBlocked = clientService.isClientStatusBlocked(senderAccount.getClientUuid());
+        boolean isRecipientStatusBlocked = clientService.isClientStatusBlocked(recipientAccount.getClientUuid());
+        if (isSenderStatusBlocked || isRecipientStatusBlocked) {
             throw new TransactionNotAllowedException("Client is not active");
         }
     }
