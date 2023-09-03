@@ -6,7 +6,7 @@ import com.project.bankapp.entity.Manager;
 import com.project.bankapp.entity.enums.ManagerStatus;
 import com.project.bankapp.exception.DataNotFoundException;
 import com.project.bankapp.repository.ManagerRepository;
-import com.project.bankapp.utils.updater.ManagerUpdater;
+import com.project.bankapp.utils.updater.impl.ManagerUpdaterImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ class ManagerServiceImplTest {
     @Mock
     ManagerRepository managerRepository;
     @Mock
-    ManagerUpdater managerUpdater;
+    ManagerUpdaterImpl managerUpdater;
     @Mock
     ManagerDtoMapper managerDtoMapper;
     @InjectMocks

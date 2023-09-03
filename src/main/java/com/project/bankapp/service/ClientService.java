@@ -90,4 +90,6 @@ public interface ClientService {
      * @return True if the Client has an active status, false otherwise.
      */
     boolean isClientStatusBlocked(UUID uuid);
+
+    Client findClientByEmail(String email);
 }

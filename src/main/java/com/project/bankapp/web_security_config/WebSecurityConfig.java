@@ -58,12 +58,16 @@ public class WebSecurityConfig {
 
                     auth.requestMatchers("/registration/new-client").permitAll();
 
+                    auth.requestMatchers("/credentials/change-password").authenticated();
+                    auth.requestMatchers("/credentials/get-user").authenticated();
+
                     auth.requestMatchers("/client/find/{uuid}").hasRole(Roles.USER.name());
                     auth.requestMatchers("/client/update/{uuid}").hasRole(Roles.USER.name());
                     auth.requestMatchers("/account/create/with-client-id/{uuid}").hasRole(Roles.USER.name());
                     auth.requestMatchers("/transaction/create").hasRole(Roles.USER.name());
                     auth.requestMatchers("/transaction/transfer").hasRole(Roles.USER.name());
                     auth.requestMatchers("/transaction/find/all-by-client/{uuid}").hasRole(Roles.USER.name());
+                    auth.requestMatchers("/transaction/find-all").hasRole(Roles.USER.name());
 
                     auth.requestMatchers("/account/**").hasRole(Roles.MANAGER.name());
                     auth.requestMatchers("/client/**").hasRole(Roles.MANAGER.name());

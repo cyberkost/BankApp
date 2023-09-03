@@ -56,10 +56,13 @@ public interface TransactionService {
      */
     List<TransactionDto> findAllTransactionsByClientId(String uuid);
 
+    List<TransactionDto> findAllByUsername(String userName);
+
     /**
      * Performs a funds transfer based on the provided transaction data.
      *
      * @param transactionDto The DTO containing transaction information for the transfer.
      */
     void transferFunds(TransactionDto transactionDto);
+
 }

@@ -2,6 +2,7 @@ package com.project.bankapp.utils.updater;
 
 import com.project.bankapp.entity.Client;
 import com.project.bankapp.entity.enums.ClientStatus;
+import com.project.bankapp.utils.updater.impl.ClientUpdaterImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,14 +10,14 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ClientUpdaterTest {
-    ClientUpdater clientUpdater;
+class ClientUpdaterImplTest {
+    ClientUpdaterImpl clientUpdater;
     Client client;
     Client clientUpdate;
 
     @BeforeEach
     void setUp() {
-        clientUpdater = new ClientUpdater();
+        clientUpdater = new ClientUpdaterImpl();
         client = new Client();
         client.setManagerUuid(UUID.randomUUID());
         client.setStatus(ClientStatus.ACTIVE);
