@@ -4,6 +4,7 @@ import com.project.bankapp.dto.TransactionDto;
 import com.project.bankapp.dto.mapper.transaction.TransactionCreationMapper;
 import com.project.bankapp.dto.mapper.transaction.TransactionDtoMapper;
 import com.project.bankapp.entity.Account;
+import com.project.bankapp.entity.Client;
 import com.project.bankapp.entity.Transaction;
 import com.project.bankapp.entity.enums.AccountStatus;
 import com.project.bankapp.entity.enums.ClientStatus;
@@ -103,6 +104,15 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> transactions = transactionRepository.findAllTransactionsWhereClientIdIs(uuid);
         return getDtoList(transactions);
     }
+
+    @Override
+    public List<TransactionDto> findAllByUsername(String userName) {
+        Client client = clientService.findClientByEmail(userName);
+        log.info("retrieving list of transactions by client username {}", userName);
+        List<Transaction> transactions = transactionRepository.findAllTransactionsWhereClientIdIs(client.getUuid());
+        return getDtoList(transactions);
+    }
+
 
     @Override
     @Transactional

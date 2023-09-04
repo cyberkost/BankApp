@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -49,4 +50,6 @@ public interface ClientRepository extends JpaRepository<Client, UUID> {
             "FROM Client cl " +
             "WHERE cl.uuid = :uuid")
     Boolean isClientStatusBlocked(@Param("uuid") UUID uuid);
+
+    Optional<Client> findByEmail(String email);
 }

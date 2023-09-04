@@ -10,7 +10,7 @@ import com.project.bankapp.entity.enums.ManagerStatus;
 import com.project.bankapp.exception.DataNotFoundException;
 import com.project.bankapp.repository.ClientRepository;
 import com.project.bankapp.service.ManagerService;
-import com.project.bankapp.utils.updater.ClientUpdater;
+import com.project.bankapp.utils.updater.impl.ClientUpdaterImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +36,7 @@ class ClientServiceImplTest {
     @Mock
     ClientDtoMapper clientDtoMapper;
     @Mock
-    ClientUpdater clientUpdater;
+    ClientUpdaterImpl clientUpdater;
     @Mock
     ManagerService managerService;
     @InjectMocks

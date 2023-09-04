@@ -8,7 +8,7 @@ import com.project.bankapp.entity.Account;
 import com.project.bankapp.entity.enums.AccountStatus;
 import com.project.bankapp.exception.DataNotFoundException;
 import com.project.bankapp.repository.AccountRepository;
-import com.project.bankapp.utils.updater.AccountUpdater;
+import com.project.bankapp.utils.updater.impl.AccountUpdaterImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +33,7 @@ class AccountServiceImplTest {
     @Mock
     AccountUpdateMapper accountUpdateMapper;
     @Mock
-    AccountUpdater accountUpdater;
+    AccountUpdaterImpl accountUpdater;
     @InjectMocks
     AccountServiceImpl accountService;
     Account account1;

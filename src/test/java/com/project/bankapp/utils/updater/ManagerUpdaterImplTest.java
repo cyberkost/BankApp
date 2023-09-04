@@ -2,19 +2,20 @@ package com.project.bankapp.utils.updater;
 
 import com.project.bankapp.entity.Manager;
 import com.project.bankapp.entity.enums.ManagerStatus;
+import com.project.bankapp.utils.updater.impl.ManagerUpdaterImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ManagerUpdaterTest {
-    ManagerUpdater managerUpdater;
+class ManagerUpdaterImplTest {
+    ManagerUpdaterImpl managerUpdater;
     Manager manager;
     Manager managerUpdate;
 
     @BeforeEach
     void setUp() {
-        managerUpdater = new ManagerUpdater();
+        managerUpdater = new ManagerUpdaterImpl();
 
         manager = new Manager();
         manager.setFirstName("John");

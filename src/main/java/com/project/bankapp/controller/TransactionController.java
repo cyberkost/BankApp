@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +22,14 @@ import java.util.List;
 @Slf4j
 public class TransactionController {
     private final TransactionService transactionService;
+
+    private String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            return authentication.getName();
+        }
+        throw new UsernameNotFoundException("User is not found.");
+    }
 
     /**
      * Creates a new transaction.
@@ -40,8 +51,9 @@ public class TransactionController {
      */
     @GetMapping(value = "/transaction/find-all")
     public ResponseEntity<List<TransactionDto>> findAllTransactions() {
+        String userName = getCurrentUsername();
+        List<TransactionDto> transactionList = transactionService.findAllByUsername(userName);
         log.info("endpoint request: find all transactions");
-        List<TransactionDto> transactionList = transactionService.findAll();
         return transactionList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionList);
     }
 

@@ -15,7 +15,6 @@ import com.project.bankapp.utils.updater.ClientUpdater;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -152,6 +151,12 @@ public class ClientServiceImpl implements ClientService {
         }
         log.info("checking status for client id {}", uuid);
         return clientRepository.isClientStatusBlocked(uuid);
+    }
+
+    @Override
+    @Transactional
+    public Client findClientByEmail(String email) {
+        return clientRepository.findByEmail(email).orElseThrow(() -> new DataNotFoundException("Client not found"));
     }
 
     private List<ClientDto> getDtoList(List<Client> clientList) {

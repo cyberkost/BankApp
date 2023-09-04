@@ -4,6 +4,7 @@ import com.project.bankapp.entity.Account;
 import com.project.bankapp.entity.enums.AccountStatus;
 import com.project.bankapp.entity.enums.AccountType;
 import com.project.bankapp.entity.enums.CurrencyCode;
+import com.project.bankapp.utils.updater.impl.AccountUpdaterImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,14 +13,14 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AccountUpdaterTest {
-    AccountUpdater accountUpdater;
+class AccountUpdaterImplTest {
+    AccountUpdaterImpl accountUpdater;
     Account account;
     Account accountUpdate;
 
     @BeforeEach
     void setUp() {
-        accountUpdater = new AccountUpdater();
+        accountUpdater = new AccountUpdaterImpl();
         account = new Account();
         account.setClientUuid(UUID.randomUUID());
         account.setName("Test Account");
