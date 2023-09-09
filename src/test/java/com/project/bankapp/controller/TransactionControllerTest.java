@@ -3,6 +3,7 @@ package com.project.bankapp.controller;
 import com.project.bankapp.dto.TransactionDto;
 import com.project.bankapp.entity.Transaction;
 import com.project.bankapp.service.TransactionService;
+import com.project.bankapp.utils.session.SessionUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,13 +24,17 @@ import static org.mockito.Mockito.when;
 class TransactionControllerTest {
     @Mock
     TransactionService transactionService;
+    @Mock
+    SessionUtil sessionUtil;
     @InjectMocks
     TransactionController transactionController;
     String uuid;
+    String userName;
 
     @BeforeEach
     void setUp() {
         uuid = "7bcf30be-8c6e-4e10-a73b-706849fc94dc";
+        userName = "test@mail.com";
     }
 
     @Test
@@ -148,28 +153,30 @@ class TransactionControllerTest {
     }
 
     @Test
-    void findAllTransactionsByClientId_success() {
+    void findAllTransactionsByClient_success() {
         // given
         List<TransactionDto> expected = List.of(TransactionDto.builder().build(), TransactionDto.builder().build());
-        when(transactionService.findAllTransactionsByClientId(uuid)).thenReturn(expected);
+        when(sessionUtil.getCurrentUsername()).thenReturn(userName);
+        when(transactionService.findAllByUsername(userName)).thenReturn(expected);
         // when
-        ResponseEntity<List<TransactionDto>> actual = transactionController.findAllTransactionsByClient(uuid);
+        ResponseEntity<List<TransactionDto>> actual = transactionController.findAllTransactionsByClient();
         // then
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(expected, actual.getBody());
-        verify(transactionService).findAllTransactionsByClientId(uuid);
+        verify(transactionService).findAllByUsername(userName);
     }
 
     @Test
-    void findAllTransactionsByClientId_withEmptyList_returnsNoContentStatus() {
+    void findAllTransactionsByClient_withEmptyList_returnsNoContentStatus() {
         // given
         List<TransactionDto> expected = Collections.emptyList();
-        when(transactionService.findAllTransactionsByClientId(uuid)).thenReturn(expected);
+        when(sessionUtil.getCurrentUsername()).thenReturn(userName);
+        when(transactionService.findAllByUsername(userName)).thenReturn(expected);
         // when
-        ResponseEntity<List<TransactionDto>> actual = transactionController.findAllTransactionsByClient(uuid);
+        ResponseEntity<List<TransactionDto>> actual = transactionController.findAllTransactionsByClient();
         // then
         assertEquals(HttpStatus.NO_CONTENT, actual.getStatusCode());
         assertNull(actual.getBody());
-        verify(transactionService).findAllTransactionsByClientId(uuid);
+        verify(transactionService).findAllByUsername(userName);
     }
 }

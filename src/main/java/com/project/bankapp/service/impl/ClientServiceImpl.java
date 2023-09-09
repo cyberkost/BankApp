@@ -41,8 +41,13 @@ public class ClientServiceImpl implements ClientService {
         client.setStatus(ClientStatus.ACTIVE);
         if (client.getManagerUuid() == null) {
             List<Manager> activeManagers = managerService.findManagersSortedByClientQuantityWhereManagerStatusIs(ManagerStatus.ACTIVE);
-            Manager firstManager = managerService.getFirstManager(activeManagers);
-            client.setManagerUuid(firstManager.getUuid());
+            if (!activeManagers.isEmpty()) {
+                Manager firstManager = managerService.getFirstManager(activeManagers);
+                client.setManagerUuid(firstManager.getUuid());
+            }
+            List<Manager> managers = managerService.findAll();
+            Manager manager = managerService.getFirstManager(managers);
+            client.setManagerUuid(manager.getUuid());
         }
         clientRepository.save(client);
         log.info("client created");
