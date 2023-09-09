@@ -1,15 +1,12 @@
 package com.project.bankapp.controller;
 
 import com.project.bankapp.dto.TransactionDto;
-import com.project.bankapp.entity.Transaction;
 import com.project.bankapp.service.TransactionService;
+import com.project.bankapp.utils.session.SessionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,14 +19,7 @@ import java.util.List;
 @Slf4j
 public class TransactionController {
     private final TransactionService transactionService;
-
-    private String getCurrentUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            return authentication.getName();
-        }
-        throw new UsernameNotFoundException("User is not found.");
-    }
+    private final SessionUtil sessionUtil;
 
     /**
      * Creates a new transaction.
@@ -51,9 +41,8 @@ public class TransactionController {
      */
     @GetMapping(value = "/transaction/find-all")
     public ResponseEntity<List<TransactionDto>> findAllTransactions() {
-        String userName = getCurrentUsername();
-        List<TransactionDto> transactionList = transactionService.findAllByUsername(userName);
         log.info("endpoint request: find all transactions");
+        List<TransactionDto> transactionList = transactionService.findAll();
         return transactionList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionList);
     }
 
@@ -96,16 +85,11 @@ public class TransactionController {
         return transactionList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionList);
     }
 
-    /**
-     * Retrieves a list of transactions associated with a specific client.
-     *
-     * @param uuid The unique identifier of the client.
-     * @return ResponseEntity containing a list of TransactionDto objects if found, or a no-content response if empty.
-     */
-    @GetMapping(value = "/transaction/find/all-by-client/{uuid}")
-    public ResponseEntity<List<TransactionDto>> findAllTransactionsByClient(@PathVariable String uuid) {
-        log.info("endpoint request: find all transactions by client id {}", uuid);
-        List<TransactionDto> transactionDtoList = transactionService.findAllTransactionsByClientId(uuid);
+    @GetMapping(value = "/transaction/find/all-by-client")
+    public ResponseEntity<List<TransactionDto>> findAllTransactionsByClient() {
+        String userName = sessionUtil.getCurrentUsername();
+        List<TransactionDto> transactionDtoList = transactionService.findAllByUsername(userName);
+        log.info("endpoint request: find all transactions by client");
         return transactionDtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(transactionDtoList);
     }
 

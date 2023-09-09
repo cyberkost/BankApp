@@ -18,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -59,7 +60,25 @@ class ClientServiceImplTest {
         clients = List.of(client1, client2);
         clientDtoList = List.of(clientDto1, clientDto2);
     }
+    @Test
+    void testCreateClient() {
+        // Create a sample ClientDto and Manager
+        Manager manager = new Manager();
 
+        // Configure the behavior of your mock objects
+        when(clientCreationMapper.mapDtoToEntity(clientDto1)).thenReturn(new Client());
+        when(managerService.findManagersSortedByClientQuantityWhereManagerStatusIs(ManagerStatus.ACTIVE))
+                .thenReturn(Collections.singletonList(manager));
+        when(managerService.getFirstManager(anyList())).thenReturn(manager);
+        when(managerService.findAll()).thenReturn(Collections.singletonList(manager));
+
+        // Call the method under test
+        clientService.create(clientDto1);
+
+        // Verify that the expected methods were called on your mock objects
+        verify(clientCreationMapper, times(1)).mapDtoToEntity(clientDto1);
+        verify(clientRepository, times(1)).save(any(Client.class));
+    }
     @Test
     void create_success_withNullManagerUuid() {
         // given
@@ -78,6 +97,7 @@ class ClientServiceImplTest {
         verify(managerService).findManagersSortedByClientQuantityWhereManagerStatusIs(status);
         verify(managerService).getFirstManager(managers);
         verify(clientRepository).save(client1);
+
     }
 
     @Test

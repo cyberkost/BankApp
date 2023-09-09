@@ -56,6 +56,13 @@ public interface TransactionService {
      */
     List<TransactionDto> findAllTransactionsByClientId(String uuid);
 
+    /**
+     * Retrieves a list of transaction data transfer objects (DTOs) for a given username.
+     *
+     * @param userName The username of the user for whom transactions should be retrieved.
+     * @return A List of TransactionDto objects representing the transactions associated with the specified username.
+     * If no transactions are found, an empty List is returned.
+     */
     List<TransactionDto> findAllByUsername(String userName);
 
     /**
